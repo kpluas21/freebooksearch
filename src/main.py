@@ -11,8 +11,6 @@ __author__="Kevin Pluas"
 __version__="0.1.0"
 __license__="MIT"
 
-MAX_RESULTS = 3 # Amount of books to return from the search
-
 def main(args):
     print("Searching for free eBook links for: " + args.title)
     title_search = args.title
@@ -36,13 +34,13 @@ def main(args):
     
     while True:
         try:
-            num = int(input("Please select a link to open (Enter a number): "))
-            if num in range(len(results)):
+            num = input("Please select a link to open (Enter a number): ")
+            if int(num) in range(len(results)):
                 break
             else:
-                print("Your selection out of range. Please try again")
+                print("Your selection out of range.")
         except ValueError:
-            print("Invalid input. Please try again")
+            print("Invalid input.")
     
     try:
         webbrowser.open(top_results[num]['volumeInfo']['canonicalVolumeLink'])
