@@ -43,7 +43,7 @@ def main(args):
             print("Invalid input.")
     
     try:
-        webbrowser.open(top_results[num]['volumeInfo']['canonicalVolumeLink'])
+        webbrowser.open(top_results[int(num)]['volumeInfo']['canonicalVolumeLink'])
     except webbrowser.Error:
         print("Error: Could not open up browser. Exitting...")
         return
