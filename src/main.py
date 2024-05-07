@@ -23,12 +23,10 @@ def main(args):
         return
 
     results = response.json()['items']
+    #grab the first 10 if available
+    top_results = results[:10]
     
-    top_results = []
-    results = response.json()['items']
-    
-    for i in range(len(results)):
-        top_results.append(results[i])
+    for i in range(len(top_results)):
         pprint.pp(str(i) + ': ' + top_results[i]['volumeInfo']['title'] + ' ' 
                   +top_results[i]['volumeInfo']['canonicalVolumeLink'])
     
@@ -51,24 +49,19 @@ def main(args):
     
 if __name__ == "__main__":
     """ This is executed when run from the command line """
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="A script to help you find some links to free online books using Google Books")
 
     # Required positional argument
-    parser.add_argument("title", help="Title of the book to search for")
+    parser.add_argument("title", nargs='+', help="Title of the book to search for")
 
-    # Optional argument flag which defaults to False
-    parser.add_argument("-f", "--flag", action="store_true", default=False)
-
-    # Optional argument which requires a parameter (eg. -d test)
-    parser.add_argument("-n", "--name", action="store", dest="name")
 
     # Optional verbosity counter (eg. -v, -vv, -vvv, etc.)
-    parser.add_argument(
-        "-v",
-        "--verbose",
-        action="count",
-        default=0,
-        help="Verbosity (-v, -vv, etc)")
+    # parser.add_argument(
+    #     "-v",
+    #     "--verbose",
+    #     action="count",
+    #     default=0,
+    #     help="Verbosity (-v, -vv, etc)")
 
     # Specify output of "--version"
     parser.add_argument(
@@ -77,4 +70,9 @@ if __name__ == "__main__":
         version="%(prog)s (version {version})".format(version=__version__))
 
     args = parser.parse_args()
+
+    if args.title:
+        args.title = ' '.join(args.title)
+        print("Entered title:", args.title)
+
     main(args)
